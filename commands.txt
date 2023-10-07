@@ -1,0 +1,5 @@
+# Run the app in local
+python -m flask --app flask_app run
+
+# Enable debug mode
+python -m flask --app flask_app run --debug
