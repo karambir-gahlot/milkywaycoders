@@ -19,3 +19,6 @@
 - MultiSelect - https://github.com/admirhodzic/multiselect-dropdown/blob/main/multiselect-dropdown.js
 - jquery
 - bootstrap
+
+# Scraping
+- BeautifulSoup

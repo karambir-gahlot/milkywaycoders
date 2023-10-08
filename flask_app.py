@@ -14,6 +14,9 @@ from mock_data.space_track.satcat import (
 from mock_data.space_track.conjunctions import (
     CONJUNCTIONS
 )
+from mock_data.asteroids.close_approach import (
+    CLOSE_APPROACH_DATA, get_close_approach_impacting_my_satellite
+)
 
 app = Flask(__name__)
 # init_mysql(app)
@@ -65,4 +68,17 @@ def conjunctions_page():
         'conjunctions.html',
         selected_main_tab='conjunctions',
         my_conjunctions=my_conjunctions
+    )
+
+@app.route('/asteroids')
+def asteroids_page():
+    my_satellites = _get_mysatellites()
+    close_approaches_data = get_close_approach_impacting_my_satellite(my_satellites)
+    impacting_approaches = close_approaches_data['impacting_approaches']
+    non_impacting_approaches = close_approaches_data['non_impacting_approaches']
+    return render_template(
+        'asteroids.html',
+        selected_main_tab='asteroids',
+        impacting_approaches=impacting_approaches,
+        non_impacting_approaches=non_impacting_approaches
     )
