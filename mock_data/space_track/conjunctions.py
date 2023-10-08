@@ -1,6 +1,9 @@
 import json
+from myutils.files import (
+    get_relative_directory
+)
 
-with open('mock_data/space_track/conjunctions.json') as f:
+with open(get_relative_directory(__file__, 'conjunctions.json')) as f:
     CONJUNCTIONS = json.load(f)
 
 

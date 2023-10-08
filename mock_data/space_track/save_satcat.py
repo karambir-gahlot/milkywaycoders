@@ -4,6 +4,9 @@ import requests
 from .conjunctions import (
     get_satellites_ids
 )
+from myutils.files import (
+    get_relative_directory
+)
 
 def batch(iterable, n = 1):
    current_batch = []
@@ -34,7 +37,7 @@ def _main():
     
     print('Loaded number results:', len(result))
     
-    with open('mock_data/space_track/satcat.json', 'w') as f:
+    with open(get_relative_directory(__file__, 'satcat.json'), 'w') as f:
         json.dump(result, f)
 
 
