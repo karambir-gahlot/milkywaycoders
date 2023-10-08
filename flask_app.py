@@ -28,7 +28,7 @@ def _get_mysatellites_ids():
 
 def _get_mysatellites():
     my_satellites_ids = _get_mysatellites_ids()
-    app.logger.info("User satellites: ", ','.join(my_satellites_ids))
+    app.logger.info('User satellites: ' + ','.join(my_satellites_ids))
     my_satellites = [SATCAT_BY_NORAD_CAT_ID[sid] for sid in my_satellites_ids]
     return my_satellites
 
@@ -47,7 +47,7 @@ def home_page():
     # test_app_info = get_test_sql_data()
     # app.logger.info("AppName %s, AppID %s", test_app_info['AppName'], test_app_info['AppID'])
     my_satellites_ids = _get_mysatellites_ids()
-    app.logger.info("User satellites: ", ','.join(my_satellites_ids))
+    app.logger.info('User satellites: ' + ','.join(my_satellites_ids))
     my_satellites = [SATCAT_BY_NORAD_CAT_ID[sid] for sid in my_satellites_ids]
     return render_template(
         'main.html',
