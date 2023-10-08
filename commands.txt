@@ -1,5 +1,12 @@
 # Run the app in local
 python -m flask --app flask_app run
 
-# Enable debug mode
+# Enable debug mode - enable auto reload as well
 python -m flask --app flask_app run --debug
+
+# Run interactive shell
+python -m flask --app flask_app shell
+
+# Space Track
+## Create Cookie
+curl -c cookies.txt -b cookies.txt https://www.space-track.org/ajaxauth/login -d 'identity=<email>&password=<pwd>!'

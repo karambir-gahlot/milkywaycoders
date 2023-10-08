@@ -1,0 +1,21 @@
+- flask
+- mysql
+- requests
+- https://pypi.org/project/flask-shell-ipython/
+- https://flask-mysql.readthedocs.io/en/stable/#usage
+- https://pypi.org/project/pymysql/
+- https://flask-script.readthedocs.io/en/latest/
+
+
+# Tutorial
+- Flask Logging - https://flask.palletsprojects.com/en/2.3.x/logging/
+- MySQL - https://www.w3schools.com/mysql/mysql_insert.asp
+- GeeksforGeeks mysql tutorial - https://www.geeksforgeeks.org/profile-application-using-python-flask-and-mysql/
+- Flask - https://flask.palletsprojects.com/en/3.0.x/quickstart/
+- Bootstrap official - https://getbootstrap.com/docs/5.3/getting-started/introduction/
+- Bootstrap w3schools - https://www.w3schools.com/bootstrap5/bootstrap_get_started.php
+
+# Frontend
+- MultiSelect - https://github.com/admirhodzic/multiselect-dropdown/blob/main/multiselect-dropdown.js
+- jquery
+- bootstrap

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class="container my-2 mx-3">
+    <div class="row">
+        <div class="col-sm-4">
+            <h3>Conjunctions</h3>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center" colspan="6">General</th>
+                    <th class="text-center" colspan="5">Satellite 1</th>
+                    <th class="text-center" colspan="5">Satellite 2</th>
+                </tr>
+                <tr>
+                    <th>CDM_ID</th>
+                    <th>Created</th>
+                    <th>Emergency Reportable</th>
+                    <th>TCA</th>
+                    <th>Minimum Range</th>
+                    <th>Collision Probability</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Object Type</th>
+                    <th>RCS</th>
+                    <th>Exclusion Volume</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Object Type</th>
+                    <th>RCS</th>
+                    <th>Exclusion Volume</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for conj in my_conjunctions %}
+                <tr>
+                    <td>{{conj['CDM_ID']}}</td>
+                    <td>{{conj['CREATED'].split('.')[0]}}</td>
+                    <td>{{conj['EMERGENCY_REPORTABLE']}}</td>
+                    <td>{{conj['TCA'].split('.')[0]}}</td>
+                    <td>{{conj['MIN_RNG']}}</td>
+                    <td>{{conj['PC']}}</td>
+                    <td>{{conj['SAT_1_ID']}}</td>
+                    <td>{{conj['SAT_1_NAME']}}</td>
+                    <td>{{conj['SAT1_OBJECT_TYPE']}}</td>
+                    <td>{{conj['SAT1_RCS']}}</td>
+                    <td>{{conj['SAT_1_EXCL_VOL']}}</td>
+                    <td>{{conj['SAT_2_ID']}}</td>
+                    <td>{{conj['SAT_2_NAME']}}</td>
+                    <td>{{conj['SAT2_OBJECT_TYPE']}}</td>
+                    <td>{{conj['SAT2_RCS']}}</td>
+                    <td>{{conj['SAT_2_EXCL_VOL']}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
