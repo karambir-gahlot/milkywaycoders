@@ -19,7 +19,7 @@ def get_close_approach_impacting_my_satellite(satellites):
     for approach in CLOSE_APPROACH_DATA:
         impacted_satellites = [
             s for s in satellites
-            if s['PERIGEE'] and approach['CLOSE_APPROACH_KM_HEIGHT'] <= float(s['PERIGEE'])
+            if s['APOGEE'] and approach['CLOSE_APPROACH_KM_HEIGHT'] <= float(s['APOGEE'])
         ]
         if impacted_satellites:
             impacting_approaches.append({
