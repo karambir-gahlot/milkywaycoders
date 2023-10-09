@@ -149,6 +149,7 @@ new Chart("xray_flares_chart", {
     data: {
       labels: {{xray_flares_x_values|safe}},
       datasets: [{
+        label: 'Xray flare',
         data: {{xray_flares_y_values|safe}},
         borderColor: "blue",
         fill: false,
