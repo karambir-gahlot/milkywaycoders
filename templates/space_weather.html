@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+
+
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-6 text-center">
+            <h5>Solar Flux</h5>
+        </div>
+        <div class="col-sm-6 text-center">
+            <h5>Proton Flux</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div>
+                <canvas id="solarflux_chart"></canvas>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div>
+                <canvas id="protonflux_chart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-sm-6 text-center">
+            <h5>Magenetic Flux</h5>
+        </div>
+        <div class="col-sm-6 text-center">
+            <h5>XRay Flares</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div>
+                <canvas id="magnetometers_chart"></canvas>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div>
+                <canvas id="xray_flares_chart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+new Chart("solarflux_chart", {
+    type: "line",
+    title: 'Solar Flux',
+    data: {
+      labels: {{solar_flux_x_values|safe}},
+      datasets: [{
+        label: 'Observed flux',
+        data: {{solar_flux_observed_y_values|safe}},
+        borderColor: "blue",
+        fill: false,
+        pointRadius: 1,
+      },{
+        label: 'URSI flux',
+        data: {{solar_flux_ursi_flux_y_values|safe}},
+        borderColor: "green",
+        fill: false
+      }]
+    },
+    options: {
+        plugins: {
+          annotation: {
+            annotations: {
+              line1: {
+                label: {
+                    backgroundColor: 'transparent',
+                    color: 'black',
+                    content: 'High Level',
+                    display: true
+                },
+                type: 'line',
+                yMin: 200,
+                yMax: 200,
+                borderColor: 'red',
+                borderWidth: 2,
+              }
+            }
+          }
+        }
+      }
+  });
+
+
+
+  
+new Chart("protonflux_chart", {
+    type: "line",
+    title: 'Proton Flux',
+    data: {
+      labels: {{proton_10_x_values|safe}},
+      datasets: [{
+        label: '>=10 MeV',
+        data: {{proton_10_y_values|safe}},
+        borderColor: "blue",
+        fill: false,
+        pointRadius: 1,
+      },{
+        label: '>=50 MeV',
+        data: {{proton_50_y_values|safe}},
+        borderColor: "green",
+        fill: false,
+        pointRadius: 1,
+      },{
+        label: '>=100 MeV',
+        data: {{proton_100_y_values|safe}},
+        borderColor: "red",
+        fill: false,
+        pointRadius: 1,
+      }]
+    }
+}
+);
+
+
+new Chart("magnetometers_chart", {
+    type: "line",
+    title: 'Magnetic Flux',
+    data: {
+      labels: {{magnetometers_x_values|safe}},
+      datasets: [{
+        label: 'Hp',
+        data: {{magnetometers_y_values|safe}},
+        borderColor: "blue",
+        fill: false,
+        pointRadius: 1,
+      }]
+    }
+}
+);
+
+new Chart("xray_flares_chart", {
+    type: "line",
+    title: 'XRay Flares',
+    data: {
+      labels: {{xray_flares_x_values|safe}},
+      datasets: [{
+        data: {{xray_flares_y_values|safe}},
+        borderColor: "blue",
+        fill: false,
+        pointRadius: 1,
+      }]
+    }
+}
+);
+</script>
+
+{% endblock %}

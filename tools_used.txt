@@ -19,6 +19,7 @@
 - MultiSelect - https://github.com/admirhodzic/multiselect-dropdown/blob/main/multiselect-dropdown.js
 - jquery
 - bootstrap
+- chartjs for chart - https://www.chartjs.org
 
 # Scraping
 - BeautifulSoup

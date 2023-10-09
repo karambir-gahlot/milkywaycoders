@@ -9,13 +9,33 @@ from flask import (
 # )
 from mock_data.space_track.satcat import (
     SATCAT_DATA,
-    SATCAT_BY_NORAD_CAT_ID
+    ALL_SATELLITES_SATCAT_DATA,
+    SATCAT_BY_NORAD_CAT_ID,
+    find_neighbours
 )
 from mock_data.space_track.conjunctions import (
     CONJUNCTIONS
 )
+from mock_data.space_track.decay import (
+    get_decay_impacting_my_satellites
+)
 from mock_data.asteroids.close_approach import (
     CLOSE_APPROACH_DATA, get_close_approach_impacting_my_satellite
+)
+from space_weather.proton_data import (
+    PROTON_DATA,
+    PROTON_SERIES_10,
+    PROTON_SERIES_50,
+    PROTON_SERIES_100
+)
+from space_weather.solar_flux import (
+    SOLAR_FLUX_DATA
+)
+from space_weather.magnetometers import (
+    MAGNETOMETERS_DATA
+)
+from space_weather.xray_flares import (
+    XRAY_FLARES_DATA
 )
 
 app = Flask(__name__)
@@ -55,7 +75,7 @@ def home_page():
     return render_template(
         'main.html',
         selected_main_tab='home',
-        all_satellites=SATCAT_DATA,
+        all_satellites=ALL_SATELLITES_SATCAT_DATA,
         my_satellites_ids=my_satellites_ids,
         my_satellites=my_satellites
     )
@@ -81,4 +101,54 @@ def asteroids_page():
         selected_main_tab='asteroids',
         impacting_approaches=impacting_approaches,
         non_impacting_approaches=non_impacting_approaches
+    )
+
+
+@app.route('/space_weather')
+def space_weather_page():
+    solar_flux_x_values = [d['Date'] for d in SOLAR_FLUX_DATA]
+    solar_flux_observed_y_values = [d['Observed Flux'] for d in SOLAR_FLUX_DATA]
+    solar_flux_ursi_flux_y_values = [d['URSI Flux'] for d in SOLAR_FLUX_DATA]
+    proton_10_x_values = [p['DISPLAY_TIME'] for p in PROTON_SERIES_10]
+    proton_10_y_values = [p['flux'] for p in PROTON_SERIES_10]
+    proton_50_y_values = [p['flux'] for p in PROTON_SERIES_50]
+    proton_100_y_values = [p['flux'] for p in PROTON_SERIES_100]
+    magnetometers_x_values = [p['DISPLAY_TIME'] for p in MAGNETOMETERS_DATA]
+    magnetometers_y_values = [p['Hp'] for p in MAGNETOMETERS_DATA]
+    xray_flares_x_values = [p['DISPLAY_TIME'] for p in XRAY_FLARES_DATA]
+    xray_flares_y_values = [p['max_xrlong'] for p in XRAY_FLARES_DATA]
+    return render_template(
+        'space_weather.html',
+        selected_main_tab='space_weather',
+        solar_flux_x_values=solar_flux_x_values,
+        solar_flux_observed_y_values=solar_flux_observed_y_values,
+        solar_flux_ursi_flux_y_values=solar_flux_ursi_flux_y_values,
+        proton_10_x_values=proton_10_x_values,
+        proton_10_y_values=proton_10_y_values,
+        proton_50_y_values=proton_50_y_values,
+        proton_100_y_values=proton_100_y_values,
+        magnetometers_x_values=magnetometers_x_values,
+        magnetometers_y_values=magnetometers_y_values,
+        xray_flares_x_values=xray_flares_x_values,
+        xray_flares_y_values=xray_flares_y_values
+    )
+
+@app.route('/decay')
+def decay_page():
+    my_satellites = _get_mysatellites()
+    impacting_decay_data = get_decay_impacting_my_satellites(my_satellites)
+    return render_template(
+        'decay.html',
+        selected_main_tab='decay',
+        impacting_decay_data=impacting_decay_data
+    )
+
+@app.route('/nearbysatellites')
+def nearbysatellites_page():
+    my_satellites = _get_mysatellites()
+    neighbours_data = find_neighbours(my_satellites)
+    return render_template(
+        'nearbysatellites.html',
+        selected_main_tab='nearbysatellites',
+        neighbours_data=neighbours_data
     )

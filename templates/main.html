@@ -23,14 +23,26 @@
             </select>
         </div>
     </div>
+    <hr />
     <div class="row">
         {% for mysat in my_satellites %}
-        <div class="card">
+        <div class="card col-sm-4 mx-1 my-1">
             <div class="card-body">
                 <h4 class="card-title">{{mysat['SATNAME']}}</h4>
-                <p class="card-text">Some example text. Some example text. {{mysat['PERIGEE']}}</p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+                <p class="card-text">
+                    Norad Cat ID: {{mysat['NORAD_CAT_ID']}} <br/>
+                    Object Type: {{mysat['OBJECT_TYPE']}} <br/>
+                    Launch Date: {{mysat['LAUNCH']}} <br/>
+                    Country: {{mysat['COUNTRY']}} <br/>
+                    RCS Size: {{mysat['RCS_SIZE']}} <br/>
+                    Inclination: {{mysat['INCLINATION']}} <br/>
+                    Period: {{mysat['PERIOD']}} <br/>
+                    ApoGee: {{mysat['APOGEE']}} <br/>
+                    PeriGee: {{mysat['PERIGEE']}} <br/>
+                    Decay: {{mysat['DECAY']}}
+                </p>
+                <!-- <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a> -->
             </div>
         </div>
         {% endfor %}
