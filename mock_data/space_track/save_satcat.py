@@ -4,6 +4,9 @@ import requests
 from .conjunctions import (
     get_satellites_ids
 )
+from .decay import (
+    DECAY_SATELLITES_IDS
+)
 from myutils.files import (
     get_relative_directory
 )
@@ -26,11 +29,11 @@ def _get_satcat_urls(sat_ids):
     return requests.get(url, cookies={'': ''}).json()
 
 def _main():
-    satellites_ids = get_satellites_ids()
+    satellites_ids = list(set(get_satellites_ids() + DECAY_SATELLITES_IDS))
     print('Number of satellites:', len(satellites_ids))
     satellites_ids = list(satellites_ids)
     result = []
-    for sat_batch in batch(satellites_ids, 50):
+    for sat_batch in batch(satellites_ids, 100):
         result.extend(_get_satcat_urls(sat_batch))
         print('Loaded')
         time.sleep(3)

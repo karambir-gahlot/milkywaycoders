@@ -1,0 +1,5 @@
+References used for our Space App Challenge project
+
+DATA:
+
+    Daily flux values - https://spaceweather.gc.ca/forecast-prevision/solar-solaire/solarflux/sx-5-flux-en.php

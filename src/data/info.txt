@@ -1,0 +1,12 @@
+SolarFlux - use observed value & URSI flux
+ -- 200 danger for both
+
+Proton data - split into 3 bands (<=10 , 10-50 , 50-100)
+ -- <50 Mev - 10 proton/sr/cm^2/s
+ -- 50-100 Mev - 5 proton/sr/cm^2/s
+ -- 100 MeV - 1 proton/sr/cm^2/s
+
+
+ Xray - plot observed flux
+ - 
+
