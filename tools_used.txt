@@ -23,3 +23,7 @@
 
 # Scraping
 - BeautifulSoup
+
+# images
+- satellite icon - https://iconduck.com/emojis/98636/satellite
+- canada icon - https://iconduck.com/icons/39355/canada
