@@ -106,25 +106,69 @@ def _get_ca_table_close_approaches():
     return [_get_ca_table_row(row) for row in all_rows[1:]]
 
 
+
+_MP_CLOSE_APPROACH_TABLE_LINK = 'https://minorplanetcenter.net/iau/includes/closeapp_nl.html'
+
+def _get_mp_close_table_row(row):
+    try:
+        """
+        [<td><a href="https://www.minorplanetcenter.net/db_search/show_object?object_id=2023+QE5&amp;commit=Show" target="_blank">2023 QE5</a></td>,
+        <td>Oct 02 02:20</td>,
+        <td>25.18</td>,
+        <td>25-80</td>]
+        """
+        assert row.name == 'tr'
+        assert row.contents[0].contents[0].name == 'a' and 'minorplanetcenter' in row.contents[0].contents[0]['href'] and row.contents[0].contents[0].contents[0].string
+        assert row.contents[1].contents[0].string
+        assert row.contents[2].contents[0].string
+        assert row.contents[3].contents[0].string
+        return {
+                "ASTEROID_DESIGNATION": row.contents[0].contents[0].contents[0].string,
+                "DISCOVERY_STATION": None,
+                "CLOSE_APPROACH_DATE_UTC": '2023 ' + row.contents[1].contents[0].string.replace('Oct', '10').replace('Nov', '11'),
+                "CLOSE_APPROACH_LUNAR_DISTANCE": float(row.contents[2].contents[0].string),
+                "DISCOVERY_ANNOUNCEMENT_LINK": None,
+                "LATEST_ORBIT_OBSERVATIONS_LINK": row.contents[0].contents[0]['href'],
+                "SIZE_IN_M": row.contents[3].contents[0].string
+            }
+    except:
+        print(row)
+        raise
+
+def _get_mp_close_table_approaches():
+    soup = _get_content(_MP_CLOSE_APPROACH_TABLE_LINK)
+    all_rows = soup.findAll('tr')
+    assert len(all_rows[0].contents) == 9
+    assert all_rows[0].contents[1].contents[0].string == 'Object'
+    assert all_rows[0].contents[3].contents[0].string == 'Date'
+    assert all_rows[0].contents[5].contents[0].string == 'Dist' and all_rows[0].contents[5].contents[2].string == '(LD)'
+    assert all_rows[0].contents[7].contents[0].string == 'Size' and all_rows[0].contents[7].contents[2].string == '(m)'
+    return [_get_mp_close_table_row(row) for row in all_rows[1:]]
+
+
 def _get_all_merged_close_approaches():
     all_closed_approaches = _get_close_approaches()
     all_ca_table_closed_approaches = _get_ca_table_close_approaches()
+    all_mp_close_table_approaches = _get_mp_close_table_approaches()
     data_map = defaultdict(dict)
     for app in all_closed_approaches:
         data_map[app['ASTEROID_DESIGNATION']]['app'] = app
     for ca_app in all_ca_table_closed_approaches:
-        data_map[app['ASTEROID_DESIGNATION']]['ca_app'] = app
+        data_map[ca_app['ASTEROID_DESIGNATION']]['ca_app'] = ca_app
+    for mp_app in all_mp_close_table_approaches:
+        data_map[mp_app['ASTEROID_DESIGNATION']]['mp_app'] = mp_app
 
     merged_approaches = []
     for data_to_merge in data_map.values():
         if len(data_to_merge) == 1:
             merged_approaches.append(list(data_to_merge.values())[0])
         else:
-            all_keys = set(list(data_to_merge['app'].keys()) + list(data_to_merge['ca_app'].keys()))
+            all_keys = set(list(data_to_merge.get('app', {}).keys()) + list(data_to_merge.get('ca_app', {}).keys()) + list(data_to_merge.get('mp_app', {}).keys()))
             merged_data = {
-                k: data_to_merge['app'].get(k) or data_to_merge['ca_app'].get(k)
+                k: data_to_merge.get('app', {}).get(k) or data_to_merge.get('ca_app', {}).get(k) or data_to_merge.get('mp_app', {}).get(k)
                 for k in all_keys
             }
+            merged_approaches.append(merged_data)
     return merged_approaches
 
 if __name__ == '__main__':

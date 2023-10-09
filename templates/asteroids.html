@@ -37,7 +37,11 @@
                     <td class="{{'' if highlight_row else 'text-muted'}}">{{approach['DISCOVERY_STATION']}}</td>
                     <td class="{{'' if highlight_row else 'text-muted'}}">{{approach['CLOSE_APPROACH_DATE_UTC']}}</td>
                     <td class="{{'' if highlight_row else 'text-muted'}}">{{approach['CLOSE_APPROACH_LUNAR_DISTANCE']}}</td>
-                    <td class="{{'' if highlight_row else 'text-muted'}}"><a target="_blank" href="{{approach['DISCOVERY_ANNOUNCEMENT_LINK']}}" class="{{'' if highlight_row else 'text-muted'}}">link</a></td>
+                    <td class="{{'' if highlight_row else 'text-muted'}}">
+                        {% if approach['DISCOVERY_ANNOUNCEMENT_LINK'] %}
+                        <a target="_blank" href="{{approach['DISCOVERY_ANNOUNCEMENT_LINK']}}" class="{{'' if highlight_row else 'text-muted'}}">link</a>
+                        {% endif %}
+                    </td>
                     <td><a target="_blank" href="{{approach['LATEST_ORBIT_OBSERVATIONS_LINK']}}" class="{{'' if highlight_row else 'text-muted'}}">link</a></td>
                     <td class="{{'' if highlight_row else 'text-muted'}}">
                         {% for sat in  impacted_satellites%}
@@ -73,10 +77,16 @@
                 {% for approach in non_impacting_approaches %}
                 <tr class="{{'table-success' if approach['CLOSE_APPROACH_DATE_UTC'].startswith('2023') else ''}}">
                     <td>{{approach['ASTEROID_DESIGNATION']}}</td>
-                    <td>{{approach['DISCOVERY_STATION']}}</td>
+                    <td>
+                       {{approach['DISCOVERY_STATION']  if approach['DISCOVERY_ANNOUNCEMENT_LINK'] else ''}}
+                    </td>
                     <td>{{approach['CLOSE_APPROACH_DATE_UTC']}}</td>
                     <td>{{approach['CLOSE_APPROACH_LUNAR_DISTANCE']}}</td>
-                    <td><a target="_blank" href="{{approach['DISCOVERY_ANNOUNCEMENT_LINK']}}">link</a></td>
+                    <td>
+                        {% if approach['DISCOVERY_ANNOUNCEMENT_LINK'] %}
+                        <a target="_blank" href="{{approach['DISCOVERY_ANNOUNCEMENT_LINK']}}">link</a>
+                        {% endif %}
+                    </td>
                     <td><a target="_blank" href="{{approach['LATEST_ORBIT_OBSERVATIONS_LINK']}}">link</a></td>
                 </tr>
                 {% endfor %}
