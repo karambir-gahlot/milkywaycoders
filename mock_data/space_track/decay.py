@@ -2,6 +2,9 @@ from datetime import datetime
 from myutils.files import (
     load_json_file
 )
+from myutils.satellites import (
+    is_neighbour
+)
 from mock_data.space_track.satcat import (
     SATCAT_BY_NORAD_CAT_ID
 )
@@ -27,7 +30,8 @@ def get_decay_impacting_my_satellites(my_satellites):
         d = SATCAT_BY_NORAD_CAT_ID[decay['NORAD_CAT_ID']]
         impacted_satellites = [
             s for s in my_satellites
-            if s['PERIGEE'] and s['APOGEE'] and ((d['APOGEE'] and s['PERIGEE']<=d['APOGEE']<=s['APOGEE']) or (d['PERIGEE'] and s['PERIGEE']<=d['PERIGEE']<=s['APOGEE'])) and decay['NORAD_CAT_ID'] != s['NORAD_CAT_ID']
+            if is_neighbour(s, d, 5)
+            # if s['PERIGEE'] and s['APOGEE'] and ((d['APOGEE'] and s['PERIGEE']<=d['APOGEE']<=s['APOGEE']) or (d['PERIGEE'] and s['PERIGEE']<=d['PERIGEE']<=s['APOGEE'])) and decay['NORAD_CAT_ID'] != s['NORAD_CAT_ID']
         ]
         if impacted_satellites:
             impacting_decays.append({

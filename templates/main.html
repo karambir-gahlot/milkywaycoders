@@ -15,12 +15,24 @@
         <div class="col-sm-2">
             <h5>Select your Satellites</h5>
         </div>
-        <div class="col-sm-10">
-            <select name="mysatellites" id="mysatellites" multiple multiselect-max-items="5" multiselect-search="true">
+        <div class="col-sm-5">
+            <select name="mysatellites" id="mysatellites" multiple multiselect-max-items="20" multiselect-search="true">
                 {% for satellite in all_satellites %}
                 <option value="{{satellite['NORAD_CAT_ID']}}">{{satellite['SATNAME']}}</option>
                 {% endfor %}
             </select>
+        </div>
+        <div class="card col-sm-5">
+            <div class="card-body">
+                <!-- <h4 class="card-title">Demo</h4> -->
+                <p class="card-text">
+                    STARLINK-3303, ORCA-7, ATS 3 <br/>
+                    NEOSSAT, CASSIOPE
+                </p>
+                <button id="selectdemosatellites" class="btn btn-primary">Click to Quickly Select Demo Satellites</button>
+                <!-- <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a> -->
+            </div>
         </div>
     </div>
     <hr />
@@ -51,6 +63,12 @@
 
 <script>
     $("#mysatellites").val({{my_satellites_ids|safe}});
+
+    $("#selectdemosatellites").click(function(){
+        let demoSats = ['50162', '49013', '3029', '39089', '39265'];
+        $("#mysatellites").val(demoSats);
+        selectSatellites(demoSats);
+    });
 </script>
 <script src="/static/js/main.js"></script>
 {% endblock %}

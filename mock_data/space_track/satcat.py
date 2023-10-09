@@ -8,13 +8,22 @@ from myutils.satellites import (
 
 with open(get_relative_directory(__file__, 'satcat.json')) as f:
     SATCAT_DATA = json.load(f)
-    for s in SATCAT_DATA:
-        if s['APOGEE']:
-            s['APOGEE'] = int(s['APOGEE'])
-        if s['PERIGEE']:
-            s['PERIGEE'] = int(s['PERIGEE'])
-        if s['INCLINATION']:
-            s['INCLINATION'] = float(s['INCLINATION'])
+
+with open(get_relative_directory(__file__, 'canadian_satellites.json')) as cf:
+    _CANADIAN_SATELLITES = json.load(cf)
+
+_sat_ids = set(s['NORAD_CAT_ID'] for s in SATCAT_DATA)
+for _c in _CANADIAN_SATELLITES:
+    if _c['NORAD_CAT_ID'] not in _sat_ids:
+        SATCAT_DATA.append(_c)
+
+for s in SATCAT_DATA:
+    if s['APOGEE']:
+        s['APOGEE'] = int(s['APOGEE'])
+    if s['PERIGEE']:
+        s['PERIGEE'] = int(s['PERIGEE'])
+    if s['INCLINATION']:
+        s['INCLINATION'] = float(s['INCLINATION'])
 
 SATCAT_BY_NORAD_CAT_ID = {
     s['NORAD_CAT_ID'] : s
