@@ -21,6 +21,7 @@
             <thead>
                 <tr>
                     <th>Norad Cat ID</th>
+                    <th>Satellite Name</th>
                     <th>Object Type</th>
                     <th>Launch Date</th>
                     <th>Country</th>
@@ -36,6 +37,7 @@
                 {% for mysat in neigh_data['neighbours'] %}
                 <tr>
                     <td>{{mysat['NORAD_CAT_ID']}}</td>
+                    <td>{{mysat['SATNAME']}}</td>
                     <td>{{mysat['OBJECT_TYPE']}}</td>
                     <td>{{mysat['LAUNCH']}}</td>
                     <td>{{mysat['COUNTRY']}}</td>
